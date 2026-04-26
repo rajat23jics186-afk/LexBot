@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LexBot – AI Legal Information System</title>
+
+  <!-- Google Fonts: Playfair Display (heading) + DM Sans (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- AOS – Animate on Scroll -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="nav-logo-icon">⚖️</div>
+      <span class="nav-logo-text">Lex<span>Bot</span></span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#chat">Chat</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#chat" class="nav-cta">Ask LexBot →</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')" id="btnEn">EN</button>
+        <button class="lang-btn" onclick="setLang('hi')" id="btnHi">HI</button>
+      </div>
+      <button id="darkToggle" onclick="toggleDark()" title="Toggle dark mode"></button>
+      <div class="nav-hamburger" onclick="toggleMobileNav()" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div id="mobileNav">
+  <a href="#features" onclick="toggleMobileNav()">🛡️ Features</a>
+  <a href="#how" onclick="toggleMobileNav()">🔧 How It Works</a>
+  <a href="#topics" onclick="toggleMobileNav()">📚 Topics</a>
+  <a href="#chat" onclick="toggleMobileNav()">💬 Chat</a>
+  <a href="#faq" onclick="toggleMobileNav()">❓ FAQ</a>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero">
+  <div class="hero-inner">
+
+    <!-- Left: Visual -->
+    <div class="hero-visual" data-aos="fade-right" data-aos-duration="900">
+      <div class="hero-circle">
+        <div class="hero-circle-inner">
+          <span class="hero-icon">⚖️</span>
+          <span class="hero-icon-sub">LexBot AI</span>
+        </div>
+      </div>
+      <div class="orbit-badge ob-1">📜 IPC Sections</div>
+      <div class="orbit-badge ob-2">🛡️ Your Rights</div>
+      <div class="orbit-badge ob-3">⚡ Instant Help</div>
+    </div>
+
+    <!-- Right: Content -->
+    <div class="hero-content" data-aos="fade-left" data-aos-duration="900" data-aos-delay="150">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span data-i18n="badge">AI-Powered Legal Assistant</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span data-i18n="heroTitle1">Understand Law in</span><br />
+        <span class="highlight" data-i18n="heroTitle2">Simple Language</span>
+      </h1>
+
+      <div class="hero-typing-wrap">
+        <span class="hero-typing-label" data-i18n="typingLabel">Ask about:</span>
+        <span id="typingText"></span>
+      </div>
+
+      <p class="hero-desc" data-i18n="heroDesc">
+        Get clear, step-by-step guidance on common legal issues — FIR filing, cyber fraud, consumer rights, and more. No jargon, no confusion. Just plain language explanations.
+      </p>
+
+      <div class="hero-ask">
+        <input type="text" id="heroInput" placeholder="e.g. How to file an FIR?" data-i18n-placeholder="heroPlaceholder" />
+        <button class="hero-ask-btn" onclick="heroAsk()">
+          Ask Now <span>→</span>
+        </button>
+      </div>
+
+      <div class="hero-chips">
+        <div class="chip" onclick="setTopic('FIR Filing')">📋 FIR Filing</div>
+        <div class="chip" onclick="setTopic('Cyber Fraud')">💻 Cyber Fraud</div>
+        <div class="chip" onclick="setTopic('Consumer Rights')">🛒 Consumer Rights</div>
+        <div class="chip" onclick="setTopic('RTI')">📂 RTI</div>
+        <div class="chip" onclick="setTopic('Domestic Violence')">🏠 Domestic Violence</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     STATS BAR
+============================================================ -->
+<div class="stats-bar" data-aos="fade-up" data-aos-delay="100">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-num" id="s1">0</span>
+      <div class="stat-label">Legal Topics Covered</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="s2">0</span>
+      <div class="stat-label">Questions Answered</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="s3">0</span>
+      <div class="stat-label">Satisfied Users</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="s4">0</span>
+      <div class="stat-label">Available Hours / Day</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FEATURES
+============================================================ -->
+<section id="features" class="section">
+  <div class="section-inner">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-label">Why LexBot?</span>
+      <h2 class="section-title">Everything You Need to<br /><span class="text-gradient">Know Your Rights</span></h2>
+      <p class="section-desc">LexBot bridges the gap between complex legal language and everyday citizens — making the law accessible to everyone.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="feature-icon-wrap fi-blue">🤖</div>
+        <h3>AI Legal Assistant</h3>
+        <p>Powered by advanced AI, LexBot understands your questions contextually and provides accurate, up-to-date legal information tailored to your situation.</p>
+        <span class="feature-tag">Powered by AI</span>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-icon-wrap fi-gold">📖</div>
+        <h3>Simple Explanations</h3>
+        <p>Complex legal sections and procedures explained in plain, everyday language. No law degree required — just type your question and get clarity instantly.</p>
+        <span class="feature-tag">Plain Language</span>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-icon-wrap fi-green">🗺️</div>
+        <h3>Step-by-Step Guidance</h3>
+        <p>From filing complaints to understanding your rights, LexBot provides clear numbered steps so you know exactly what to do and in what order.</p>
+        <span class="feature-tag">Action-Oriented</span>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-icon-wrap fi-purple">🕐</div>
+        <h3>24/7 Availability</h3>
+        <p>Legal situations don't follow office hours. LexBot is always online — whether it's midnight or a holiday, get the information you need, when you need it.</p>
+        <span class="feature-tag">Always On</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HOW IT WORKS
+============================================================ -->
+<section id="how" class="section">
+  <div class="section-inner">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-label">The Process</span>
+      <h2 class="section-title">How LexBot <span class="text-gradient">Works</span></h2>
+      <p class="section-desc">Getting legal clarity has never been easier. Three simple steps to understanding your rights.</p>
+    </div>
+
+    <div class="steps-wrap">
+      <div class="step-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="step-num sn-1">1</div>
+        <div class="step-icon">💬</div>
+        <h3>Ask Your Question</h3>
+        <p>Type your legal concern in plain language — just like you'd ask a friend. No legal terminology needed. LexBot understands everyday language.</p>
+      </div>
+      <div class="step-card" data-aos="fade-up" data-aos-delay="150">
+        <div class="step-num sn-2">2</div>
+        <div class="step-icon">🧠</div>
+        <h3>AI Processes It</h3>
+        <p>LexBot's AI engine analyzes your query, cross-references relevant laws, IPC sections, and government procedures to formulate an accurate response.</p>
+      </div>
+      <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="step-num sn-3">3</div>
+        <div class="step-icon">✅</div>
+        <h3>Get Clear Answer</h3>
+        <p>Receive a structured response with a plain-language explanation, step-by-step action plan, and practical tips — all in seconds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TOPICS
+============================================================ -->
+<section id="topics" class="section">
+  <div class="section-inner">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-label">Legal Topics</span>
+      <h2 class="section-title">Common Issues We <span class="text-gradient">Cover</span></h2>
+      <p class="section-desc">Click any topic to instantly ask LexBot about it.</p>
+    </div>
+
+    <div class="topics-grid">
+      <div class="topic-pill" data-aos="fade-up" data-aos-delay="0"   onclick="setTopic('FIR Filing')">
+        <span class="topic-emoji">📋</span>
+        <div class="topic-info"><h4>FIR Filing</h4><span>How to file a First Information Report</span></div>
+      </div>
+      <div class="topic-pill" data-aos="fade-up" data-aos-delay="60"  onclick="setTopic('Cyber Fraud')">
+        <span class="topic-emoji">💻</span>
+        <div class="topic-info"><h4>Cyber Fraud</h4><span>Online scam complaints & cyber crime</span></div>
+      </div>
+      <div class="topic-pill" data-aos="fade-up" data-aos-delay="120" onclick="setTopic('Consumer Rights')">
+        <span class="topic-emoji">🛒</span>
+        <div class="topic-info"><h4>Consumer Rights</h4><span>Product complaints & refund rights</span></div>
+      </div>
+      <div class="topic-pill" data-aos="fade-up" data-aos-delay="180" onclick="setTopic('Domestic Violence')">
+        <span class="topic-emoji">🏠</span>
+        <div class="topic-info"><h4>Domestic Violence</h4><span>Protection orders & legal remedies</span></div>
+      </div>
+      <div class="topic-pill" data-aos="fade-up" data-aos-delay="240" onclick="setTopic('RTI')">
+        <span class="topic-emoji">📂</span>
+        <div class="topic-info"><h4>Right to Information</h4><span>How to file an RTI application</span></div>
+      </div>
+      <div class="topic-pill" data-aos="fade-up" data-aos-delay="300" onclick="setTopic('Labour Rights')">
+        <span class="topic-emoji">👷</span>
+        <div class="topic-info"><h4>Labour Rights</h4><span>Workplace rights & employer duties</span></div>
+      </div>
+      <div class="topic-pill" data-aos="fade-up" data-aos-delay="360" onclick="setTopic('Property Dispute')">
+        <span class="topic-emoji">🏗️</span>
+        <div class="topic-info"><h4>Property Dispute</h4><span>Land & property legal guidance</span></div>
+      </div>
+      <div class="topic-pill" data-aos="fade-up" data-aos-delay="420" onclick="setTopic('Bail Process')">
+        <span class="topic-emoji">🔐</span>
+        <div class="topic-info"><h4>Bail Process</h4><span>Types of bail & how to apply</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CHATBOT SECTION
+============================================================ -->
+<section id="chat" class="section">
+  <div class="section-inner">
+    <div class="section-head section-head-center" data-aos="fade-up">
+      <span class="section-label">Chat with LexBot</span>
+      <h2 class="section-title">Your AI Legal <span class="text-gradient">Companion</span></h2>
+      <p class="section-desc section-desc-centered">Ask anything about Indian law. LexBot provides informational guidance — not legal advice.</p>
+    </div>
+
+    <div class="chat-container" data-aos="fade-up" data-aos-delay="100">
+      <div class="chat-window">
+
+        <div class="chat-header">
+          <div class="chat-avatar">⚖️</div>
+          <div class="chat-header-info">
+            <h3>LexBot</h3>
+            <span>AI Legal Information Assistant</span>
+          </div>
+          <div class="chat-status">
+            <div class="status-dot"></div>
+            Online
+          </div>
+          <button class="download-btn download-btn-inline" onclick="downloadChatPDF()">
+            📄 Save Chat
+          </button>
+        </div>
+
+        <div id="chatMessages"></div>
+
+        <div class="chat-quick">
+          <span class="chat-quick-label">Quick Ask:</span>
+          <button class="quick-btn" onclick="quickAsk('How to file an FIR?')">📋 FIR</button>
+          <button class="quick-btn" onclick="quickAsk('I was scammed online, what should I do?')">💻 Cyber Fraud</button>
+          <button class="quick-btn" onclick="quickAsk('How to file a consumer complaint?')">🛒 Consumer</button>
+          <button class="quick-btn" onclick="quickAsk('How to file an RTI?')">📂 RTI</button>
+          <button class="quick-btn" onclick="quickAsk('What are my labour rights?')">👷 Labour</button>
+        </div>
+
+        <div class="chat-input-bar">
+          <button class="chat-voice-btn" id="voiceBtn" onclick="toggleVoice()" title="Voice input">🎤</button>
+          <textarea id="chatInput"
+            placeholder="Type your legal question here..."
+            rows="1"
+            onkeydown="handleKey(event)"
+            oninput="autoResize(this)"></textarea>
+          <button class="chat-send-btn" onclick="sendMessage()" title="Send">➤</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+============================================================ -->
+<section id="faq" class="section">
+  <div class="section-inner">
+    <div class="section-head section-head-center" data-aos="fade-up">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Frequently Asked <span class="text-gradient">Questions</span></h2>
+    </div>
+
+    <div class="faq-list" id="faqList" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">
+          Is LexBot providing actual legal advice?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          No. LexBot provides legal <strong>information</strong> only — it helps you understand laws, procedures, and your rights in plain language. For professional legal advice specific to your case, please consult a licensed advocate or lawyer. LexBot is an educational tool, not a substitute for professional legal counsel.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">
+          What kinds of legal questions can I ask?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          You can ask about FIR filing procedures, cyber crime complaints, consumer rights, Right to Information (RTI), domestic violence laws, bail processes, labour rights, property disputes, and many more common legal topics under Indian law. The more specific your question, the better the answer.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">
+          Is my chat data private and secure?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          Yes. Your conversations with LexBot are stored securely and are not shared with any third parties. Chat history is saved only to help you review past information. You can download or delete your chat history at any time. We do not store personally identifiable information.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">
+          Does LexBot support Hindi?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          Yes! LexBot supports both English and Hindi. You can toggle between languages using the EN/HI button in the navigation bar. The interface and response content will switch accordingly, making legal information accessible to Hindi-speaking users as well.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">
+          Can I use voice input to ask questions?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          Absolutely! Click the 🎤 microphone button in the chat input area to use voice input. LexBot uses the Web Speech API to convert your spoken words into text. This feature works in modern browsers like Chrome, Edge, and Safari. Make sure to allow microphone permissions when prompted.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">
+          How accurate is the information provided?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          LexBot's information is based on Indian law including the IPC, CrPC, Consumer Protection Act, IT Act, and other relevant legislation. While we strive for accuracy, laws can change and interpretations may vary. Always verify important information with an official government source or a qualified legal professional before taking action.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <h3>⚖️ LexBot</h3>
+        <p>AI-powered legal information system helping every Indian citizen understand their rights in simple language.</p>
+        <div class="footer-disclaimer">
+          ⚠️ <strong>Disclaimer:</strong> LexBot provides legal information only and is not a substitute for professional legal advice. For specific legal matters, please consult a qualified advocate.
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal Topics</h4>
+        <ul>
+          <li><a href="#" onclick="setTopic('FIR Filing')">→ FIR Filing</a></li>
+          <li><a href="#" onclick="setTopic('Cyber Fraud')">→ Cyber Fraud</a></li>
+          <li><a href="#" onclick="setTopic('Consumer Rights')">→ Consumer Rights</a></li>
+          <li><a href="#" onclick="setTopic('RTI')">→ RTI Application</a></li>
+          <li><a href="#" onclick="setTopic('Labour Rights')">→ Labour Rights</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="https://www.india.gov.in" target="_blank" rel="noopener noreferrer">→ India.gov.in</a></li>
+          <li><a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer">→ CyberCrime Portal</a></li>
+          <li><a href="https://consumerhelpline.gov.in" target="_blank" rel="noopener noreferrer">→ Consumer Helpline</a></li>
+          <li><a href="https://nalsa.gov.in" target="_blank" rel="noopener noreferrer">→ NALSA Legal Aid</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">📧 lexbot@example.com</a></li>
+          <li><a href="#">📱 Helpline: 15100</a></li>
+          <li><a href="#">📍 India</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 LexBot — AI Legal Information System. All rights reserved.</span>
+      <div class="footer-social">
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-btn" title="Follow on Twitter">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 10.5 0 10.5 0s-3 4.5-11 7.5"/>
+          </svg>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-btn" title="Connect on LinkedIn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-btn" title="Follow on GitHub">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ============================================================
+     SCRIPTS (load order matters)
+============================================================ -->
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- App Script -->
+<script src="./script.js"></script>
+
+</body>
+</html>
