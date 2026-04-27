@@ -337,7 +337,7 @@ async function sendMessage(forcedMsg) {
     botMsg = renderMessage(formatBotResponse(apiResp), 'bot', true);
   } else {
     const fallback = `<div style="font-size:0.88rem;line-height:1.7;">
-      <p>⚠️ Unable to reach the backend server at <strong>http://localhost:5000</strong></p>
+      <p>⚠️ Unable to reach the backend server at <strong>https://lexbot-backend.onrender.com</strong></p>
       <p style="margin-top:8px;"><strong>Make sure your backend is running:</strong></p>
       <p style="margin-top:4px;">From the backend folder, run: <code style="background:#f0f0f0;padding:2px 4px;">npm run dev</code></p>
       <p style="margin-top:8px;"><strong>For this topic, you can also:</strong></p>
