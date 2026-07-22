@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', updateAuthNavUI);
 // cached in localStorage. The old approach of generating a sessionId
 // client-side and never proving ownership of it is gone — every chat/history
 // call now needs a valid bearer token for that exact sessionId.
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'https://lexbot-backend-new.onrender.com';
 
 async function mintSession() {
   const userToken = localStorage.getItem('lexbot-userToken');
